@@ -20,56 +20,23 @@ public class CameraCreator : MonoBehaviour
     {
         if (Input.GetKeyDown("c"))
         {
-            // Create new cameras to use, copying from the main camera  
-            var tripod = Instantiate(indicator, mainCamera.transform.position, mainCamera.transform.rotation); //Just create a dummy object so we can see where we created our camera
-            var camera = tripod.AddComponent<Camera>();
-
-            // Set the backgrounds 
-            camera.backgroundColor = Color.black;
-
-            // Set render order
-            camera.depth = 1;
-
-            // Camera 2 is a minimap, so disable the audio listener and make it small
-            //var fullScreen = mainCamera.pixelRect;
-            //camera.pixelRect = new Rect(fullScreen.xMin, fullScreen.yMin, fullScreen.width * 0.2f, fullScreen.height * 0.2f);
-
-            //Disable current camera
-            if(tripods.Count > 0)
-            {
-                Camera prevCamera = tripods[tripodIdx].GetComponent<Camera>();
-                prevCamera.enabled = false;
-                prevCamera.targetTexture = null;
-                tripodIdx++;
-            }
-            camera.enabled = true;
-            camera.targetTexture = colorMatrix;
-            tripods.Add(tripod);
+            CreateTripod();
         }
         else if(tripods.Count > 1 && Input.GetKeyDown("z")) //Cycle through cameras left
         {
-            Camera prevCamera = tripods[tripodIdx].GetComponent<Camera>();
-            tripodIdx += tripods.Count - 1;
-            tripodIdx %= tripods.Count;
-            Camera nextCamera = tripods[tripodIdx].GetComponent<Camera>();
-            SwitchCameras(prevCamera, nextCamera);
+            CycleThroughAvailableCameras(-1);
         }
         else if (tripods.Count > 1 && Input.GetKeyDown("x")) //Cycle through cameras right
         {
-            Camera prevCamera = tripods[tripodIdx].GetComponent<Camera>();
-            tripodIdx += tripods.Count + 1;
-            tripodIdx %= tripods.Count;
-            Camera nextCamera = tripods[tripodIdx].GetComponent<Camera>();
-            SwitchCameras(prevCamera, nextCamera);
+            CycleThroughAvailableCameras(1);
         }
         else if (tripods.Count > 0 && Input.GetKeyDown(",") && (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)))
-        {       
+        {
             Destroy(tripods[tripodIdx]);
             tripods.RemoveAt(tripodIdx);
             if (tripods.Count > 0)
             {
-                tripodIdx += tripods.Count - 1;
-                tripodIdx %= tripods.Count;
+                CycleThroughAvailableCameras(-1);
             }
             else
             {
@@ -101,6 +68,45 @@ public class CameraCreator : MonoBehaviour
                 Debug.Log(str);
             }
         }
+    }
+
+    private void CreateTripod()
+    {
+        //Create a new camera from the current player's view
+        var tripod = Instantiate(indicator, mainCamera.transform.position, mainCamera.transform.rotation); //Just create a dummy object so we can see where we created our camera
+        var camera = tripod.AddComponent<Camera>();
+
+        //Ensure tripod cameras don't render other tripods by masking them out
+        tripod.layer = LayerMask.NameToLayer("Tripods");
+        int mask = 1 << tripod.layer;
+        camera.cullingMask = ~mask;
+
+        // Set the backgrounds 
+        camera.backgroundColor = Color.black;
+
+        // Set render order
+        camera.depth = 1;
+
+        //Disable current camera
+        if (tripods.Count > 0)
+        {
+            Camera prevCamera = tripods[tripodIdx].GetComponent<Camera>();
+            prevCamera.enabled = false;
+            prevCamera.targetTexture = null;
+            tripodIdx++;
+        }
+        camera.enabled = true;
+        camera.targetTexture = colorMatrix;
+        tripods.Add(tripod);
+    }
+
+    private void CycleThroughAvailableCameras(int relativeIndex)
+    {
+        Camera prevCamera = tripods[tripodIdx].GetComponent<Camera>();
+        tripodIdx += tripods.Count + relativeIndex;
+        tripodIdx %= tripods.Count;
+        Camera nextCamera = tripods[tripodIdx].GetComponent<Camera>();
+        SwitchCameras(prevCamera, nextCamera);
     }
 
     private void SwitchCameras(Camera oldCamera, Camera newCamera)
