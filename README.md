@@ -48,7 +48,12 @@ Your mileage may vary
 * Be wary of making the resolution of the virtual camera too large as the conversion to RAM is slow and may lock up if too large!
 
 ### Ideas
-Cameras are currently stationary, consider giving them a rigid body/physics and animating them
+* Process the OSC messages with Wekinator
+  * Use classification or regression algorithms on the inputs to detect virtual objects
+  * Play different music based on what is in front of the virtual camera
+  * Create a virtual zoo of simple scripted "animal" objects that walk in front of cameras and make sounds at it
+* Edit the code to make a virtual osc camera that follows (is parented to) the player
+* Cameras are currently stationary, consider giving them a rigid body/physics and animating them
 
 ### Prerequisites
 
