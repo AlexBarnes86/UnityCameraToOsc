@@ -1,8 +1,9 @@
 # Unity Camera to OSC
 Create virtual cameras in Unity.
 
-Sends low resolution version of virtual cameras (10x10) over OSC
-Intended for use with Wekinator for Machine Learning / Image recognition
+* Sends low resolution version of virtual cameras (10x10) rgb over OSC.
+* defaults to 300 float values on osc address /wek/inputs
+* Intended for use with Wekinator for Machine Learning / Image recognition
 
 |Control | Action|
 |-|-|
@@ -13,7 +14,7 @@ Intended for use with Wekinator for Machine Learning / Image recognition
 | < | Destroy current virtual camera (and cycle left) |
 
 OSC Values are sent automatically once a virtual camera has been created
-* 3 float values per grid cell
+* 3 float values per pixel
 * Ordering: red, green, blue
 * Range: float values between 0 and 1
 
