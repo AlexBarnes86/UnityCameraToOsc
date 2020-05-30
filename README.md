@@ -1,14 +1,16 @@
 # Unity Camera to OSC
-Create virtual cameras in Unity
+Create virtual cameras in Unity.
+
 Sends low resolution version of virtual cameras (10x10) over OSC
 Intended for use with Wekinator for Machine Learning / Image recognition
 
-Control | Action
-WASD | Move forward, left strafe, backward, right strafe
-c | Create virtual camera (output appears on the HUD / Unity Canvas)
-z | Cycle current virtual camera left through created virtual cameras
-x | Cycle current virtual camera right through created virutal cameras
-< | Destroy current virtual camera (and cycle left)
+|Control | Action|
+|-|-|
+| WASD | Move forward, left strafe, backward, right strafe |
+| c | Create virtual camera (output appears on the HUD / Unity Canvas) |
+| z | Cycle current virtual camera left through created virtual cameras |
+| x | Cycle current virtual camera right through created virutal cameras |
+| < | Destroy current virtual camera (and cycle left) |
 
 OSC Values are sent automatically once a virtual camera has been created
 * 3 float values per grid cell
