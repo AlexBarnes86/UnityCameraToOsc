@@ -23,16 +23,21 @@ See: http://opensoundcontrol.org/introduction-osc
 
 ## Getting Started
 
-Download UnityHub, Install an appropriate version of Unity (time of writing used LTS 2018.4.20f1)
+1. Download UnityHub
+2. Install an appropriate version of Unity (time of writing used LTS 2018.4.20f1)
+3. Clone and add this project folder in Unity Hub
+4. Open
+5. Navigate to Scenes in the project view
+6. Drag in SampleScene
+7. Delete the default scene
+8. Edit the scene, recommend animating objects in front of cameras etc
 
 ### Use a different OSC host, port, or address:
 In Unity navigate to TripodController and edit TripodToOSC values in the inspector
-Run
 
-Uses Wekinator defaults
-localhost:6448 /wek/inputs
+Uses Wekinator defaults: localhost:6448 /wek/inputs
 
-Currently the program does nothing on recieved OSC events, but easy to modify
+Currently the program does nothing on recieved OSC events (/wek/outputs), but easy to modify
 
 ### Modifying the virtual camera resolution 
 It's a hack, but ensure the MAX\_BUFFER\_SIZE can accomodate your desired resolution
@@ -41,6 +46,9 @@ In the interest of time I simply bumped it up 10x from the default 1000 value pr
 Your mileage may vary
 * Consider modifying TripodToOSC::OnTripodViewUpdate to send monochrome values if color is not needed
 * Be wary of making the resolution of the virtual camera too large as the conversion to RAM is slow and may lock up if too large!
+
+### Ideas
+Cameras are currently stationary, consider giving them a rigid body/physics and animating them
 
 ### Prerequisites
 
