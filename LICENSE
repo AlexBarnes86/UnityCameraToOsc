@@ -1,6 +1,15 @@
+IMPORTANT :
+
+The Osc and UDPPacketIO scripts are from Makingthings's Make Controller OSC C# implementation:
+https://web.archive.org/web/20121021044334/http://www.makingthings.com:80/ref/firmware/html/group___o_s_c.html
+
+Their code is licensed under the Apache License 2.0: http://www.apache.org/licenses/LICENSE-2.0
+
+FOR THE PARTS THAT I CODED OR MODIFIED :
+
 MIT License
 
-Copyright (c) 2020 ToastedBits
+Copyright (c) 2020 Alexander Bradley Barnes
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
